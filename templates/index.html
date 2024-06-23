@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rekomendasi Kendaraan Listrik</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rekomendasi Kendaraan Listrik</h1>
+    <form method="POST">
+        MSRP: <input type="text" name="msrp"><br>
+        Model Year: <input type="text" name="model_year"><br>
+        Electric Range: <input type="text" name="electric_range"><br>
+        <input type="submit" value="Get Recommendations">
+    </form>
+
+    {% if recommendations_knn %}
+        <h2>Rekomendasi dengan KNN:</h2>
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>Make</th>
+                <th>Price Category</th>
+                <th>Model Year</th>
+                <th>Base MSRP</th>
+                <th>Electric Vehicle Type</th>
+            </tr>
+            {% for rec in recommendations_knn %}
+            <tr>
+                <td>{{ rec['Model'] }}</td>
+                <td>{{ rec['Make'] }}</td>
+                <td>{{ rec['Price Category'] }}</td>
+                <td>{{ rec['Model Year'] }}</td>
+                <td>{{ rec['Base MSRP'] }}</td>
+                <td>{{ rec['Electric Vehicle Type'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    {% if recommendations_rf %}
+        <h2>Rekomendasi dengan Random Forest:</h2>
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>Make</th>
+                <th>Price Category</th>
+                <th>Model Year</th>
+                <th>Base MSRP</th>
+                <th>Electric Vehicle Type</th>
+            </tr>
+            {% for rec in recommendations_rf %}
+            <tr>
+                <td>{{ rec['Model'] }}</td>
+                <td>{{ rec['Make'] }}</td>
+                <td>{{ rec['Price Category'] }}</td>
+                <td>{{ rec['Model Year'] }}</td>
+                <td>{{ rec['Base MSRP'] }}</td>
+                <td>{{ rec['Electric Vehicle Type'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    {% if predicted_category_knn %}
+        <h2>Prediksi Kategori Harga dengan KNN: {{ predicted_category_knn }}</h2>
+    {% endif %}
+
+    {% if predicted_category_rf %}
+        <h2>Prediksi Kategori Harga dengan Random Forest: {{ predicted_category_rf}}</h2>
+    {% endif %}
+</body>
+</html>
